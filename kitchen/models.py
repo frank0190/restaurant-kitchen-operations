@@ -11,7 +11,6 @@ class DishType(models.Model):
     class Meta:
         ordering = ["name"]
 
-
     def __str__(self):
         return self.name
 
@@ -21,8 +20,6 @@ class Cook(AbstractUser):
 
     class Meta:
         ordering = ["username"]
-        verbose_name = "cook"
-        verbose_name_plural = "cooks"
 
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
@@ -37,6 +34,8 @@ class Dish(models.Model):
 
     class Meta:
         ordering = ["name"]
+        verbose_name = "dish"
+        verbose_name_plural = "dishes"
 
     def __str__(self):
         return self.name
