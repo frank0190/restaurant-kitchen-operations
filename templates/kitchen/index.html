@@ -1,4 +1,7 @@
-<h1>KITCHEN OPERATIONS</h1>
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>KITCHEN OPERATIONS</h1>
   <p>Welcome to manage easily all kitchen processes!</p>
   <h2>Dynamic content</h2>
   <p>The kitchen service has the following record counts:</p>
@@ -9,5 +12,6 @@
   </ul>
 
   <p>You have visited this page
-      {{ num_visits }} time{{ num_visits|pluralize }}.
+    {{ num_visits }} time{{ num_visits|pluralize }}.
   </p>
+{% endblock %}
