@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>
-    Dish list
+    Dish list <a style="float: right" href="{% url 'kitchen:dish-create' %}">+</a>
   </h1>
   {% if dish_list %}
     <table class="table">
@@ -19,8 +19,7 @@
           <td>
             {{ dish.id }}
           </td>
-          <td>
-            {{ dish.name }}
+          <td><a href="{% url 'kitchen:dish-detail' dish.id %}">{{ dish.name }}</a>
           </td>
           <td>
             {{ dish.description }}

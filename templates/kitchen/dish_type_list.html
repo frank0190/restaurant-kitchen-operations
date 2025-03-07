@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>
-    Dish type list
+    Dish type list <a style="float: right" href="{% url 'kitchen:dish-type-create' %}">+</a>
   </h1>
   {% if dish_type_list %}
     <table class="table">
@@ -17,13 +17,13 @@
             {{ dish_type.id }}
           </td>
           <td>
-            {{ dish_type.nam }}
+            {{ dish_type.name }}
           </td>
         </tr>
       {% endfor %}
     </table>
 
   {% else %}
-    <p>There are no dish type in the service.</p>
+    <p>There are no dish types in the service.</p>
   {% endif %}
 {% endblock %}
