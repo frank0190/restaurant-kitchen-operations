@@ -3,6 +3,11 @@ body {
 }
 
 .sidebar-nav {
-    padding: 0;
+    padding: 20px;
     list-style: none;
+}
+
+.link-to-page {
+    float: right;
+    margin: 0 2px 0 2px;
 }
