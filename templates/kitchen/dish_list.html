@@ -2,7 +2,10 @@
 
 {% block content %}
   <h1>
-    Dish list <a style="float: right" href="{% url 'kitchen:dish-create' %}">+</a>
+    Dish list
+    <a href="{% url 'kitchen:dish-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
   </h1>
   {% if dish_list %}
     <table class="table">
@@ -12,6 +15,8 @@
         <th>Description</th>
         <th>Price</th>
         <th>Type</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
 
       {% for dish in dish_list %}
@@ -29,6 +34,12 @@
           </td>
           <td>
             {{ dish.dish_type }}
+          </td>
+          <td>
+            <a href="{% url 'kitchen:dish-update' dish.id %}">UPDATE</a>
+          </td>
+          <td>
+            <a href="{% url 'kitchen:dish-delete' dish.id %}">DELETE</a>
           </td>
         </tr>
       {% endfor %}

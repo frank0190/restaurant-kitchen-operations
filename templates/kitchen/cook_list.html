@@ -2,7 +2,10 @@
 
 {% block content %}
   <h1>
-    Cook list <a style="float: right" href="{% url 'kitchen:cook-create' %}">+</a>
+    Cook list
+    <a href="{% url 'kitchen:cook-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
   </h1>
   {% if cook_list %}
     <table class="table">
@@ -13,6 +16,8 @@
         <th>Last name</th>
         <th>Email</th>
         <th>Years of experience</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
 
       {% for cook in cook_list %}
@@ -34,6 +39,11 @@
           </td>
           <td>
             {{ cook.years_of_experience }}
+          <td>
+            <a href="#">UPDATE</a>
+          </td>
+          <td>
+            <a href="{% url 'kitchen:cook-delete' cook.id %}">DELETE</a>
           </td>
         </tr>
       {% endfor %}
