@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Name: {{ dish.name }}</h1>
+  <h1>
+    Name: {{ dish.name }}
+    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
   <p><strong>Price: </strong>{{ dish.price }}</p>
   <p><strong>Description: </strong>{{ dish.description }}</p>
-  <p><strong>Dish type: </strong>{{ dish.dish_type }}</p>
+  <p><strong>Dish type: </strong>{{ dish.dish_type.name }}</p>
   <hr>
-  <h4>Cooks: </h4>
+
+  <h4>Cooks:
+    {% if dish in user.cooked_dishes.all %}
+      <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-danger link-to-page">
+        Delete me from this dish
+      </a>
+    {% else %}
+      <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-success link-to-page">
+        Assign me to this dish
+      </a>
+    {% endif %}
+
+  </h4>
   <ul>
     {% for cook in dish.cooks.all %}
       <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
     {% endfor %}
   </ul>
-
-
 {% endblock %}
