@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -71,7 +71,6 @@ class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class DishListView(LoginRequiredMixin, generic.ListView):
     model = Dish
-    queryset = Dish.objects.select_related("dish_type")
     paginate_by = 5
 
     def get_context_data(
@@ -83,10 +82,11 @@ class DishListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
+        queryset = Dish.objects.select_related("dish_type")
         name = self.request.GET.get("name")
         if name:
-            return self.queryset.filter(name__icontains=name)
-        return self.queryset
+            return queryset.filter(name__icontains=name)
+        return queryset
 
 class DishCreateView(LoginRequiredMixin, generic.CreateView):
     model = Dish
@@ -144,3 +144,17 @@ class CookDetailView(LoginRequiredMixin, generic.DetailView):
 class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
     success_url = reverse_lazy("kitchen:cook-list")
+
+
+@login_required
+def toggle_dish_assignment(request: HttpRequest, pk: int) -> HttpResponse:
+    dish = get_object_or_404(Dish, pk=pk)
+    if not isinstance(request.user, Cook):
+        return HttpResponseForbidden("Only cooks can assign themselves to the dish.")
+
+    if dish.cooks.filter(id=request.user.id).exists():
+        dish.cooks.remove(request.user)
+    else:
+        dish.cooks.add(request.user)
+
+    return redirect("kitchen:dish-detail", pk=pk)
