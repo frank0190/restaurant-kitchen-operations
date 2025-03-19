@@ -1,0 +1,17 @@
+<!-- Кнопки User і Logout -->
+<div class="position-absolute top-0 end-0 mt-3 me-3 d-flex align-items-center">
+  {% if user.is_authenticated %}
+    <!-- Кнопка Logout -->
+    <form method="POST" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <button type="submit" class="btn btn-sm bg-white text-primary btn-round me-3 mb-0">Logout</button>
+    </form>
+
+    <!-- Кнопка з іменем користувача -->
+    <a href="{{ user.get_absolute_url }}" target="_blank"
+       class="btn btn-sm bg-white text-primary btn-round mb-0">{{ user.get_username }}</a>
+  {% else %}
+    <a href="{% url 'login' %}" class="btn btn-link text-white">Login</a>
+  {% endif %}
+</div>
