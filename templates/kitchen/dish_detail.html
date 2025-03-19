@@ -1,36 +1,85 @@
-{% extends "base.html" %}
+{% extends "base-presentation.html" %}
 
 {% block content %}
-  <h1>
-    Name: {{ dish.name }}
-    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
+  <div class="container mt-5">
+    <!-- Dish Name and Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="display-4 text-primary" style="font-family: 'Georgia', serif;">{{ dish.name }}
+        <div>
+          <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger me-2">
+            <i class="bi bi-trash"></i> Delete
+          </a>
+          <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary">
+            <i class="bi bi-pencil-square"></i> Update
+          </a>
+        </div>
+      </h1>
+    </div>
 
-    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
-  </h1>
-  <p><strong>Price: </strong>{{ dish.price }}</p>
-  <p><strong>Description: </strong>{{ dish.description }}</p>
-  <p><strong>Dish type: </strong>{{ dish.dish_type.name }}</p>
-  <hr>
+    <!-- Dish Price -->
+    <p class="fs-5 mb-3"><strong>Price:</strong> {{ dish.price }}</p>
 
-  <h4>Cooks:
-    {% if dish in user.cooked_dishes.all %}
-      <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-danger link-to-page">
-        Delete me from this dish
-      </a>
-    {% else %}
-      <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-success link-to-page">
-        Assign me to this dish
-      </a>
-    {% endif %}
+    <!-- Dish Description -->
+    <p class="fs-5 mb-3"><strong>Description:</strong> {{ dish.description }}</p>
 
-  </h4>
-  <ul>
-    {% for cook in dish.cooks.all %}
-      <li>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</li>
-    {% endfor %}
-  </ul>
+    <!-- Dish Type -->
+    <p class="fs-5 mb-4"><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
+
+    <hr>
+
+    <!-- Cooks Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="text-primary">Cooks:</h4>
+      <div>
+        {% if dish in user.cooked_dishes.all %}
+          <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-danger">
+            <i class="bi bi-x-circle"></i> Delete me from this dish
+          </a>
+        {% else %}
+          <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Assign me to this dish
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- List of Cooks -->
+    <ul class="list-group">
+      {% for cook in dish.cooks.all %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ cook.username }} ({{ cook.first_name }} {{ cook.last_name }})</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Section with Links (Moved to the bottom of the page) -->
+  <section class="pt-1 pb-1" id="count-stats" style="position: absolute; bottom: 0; width: 100%;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 z-index-2 border-radius-xl mx-auto py-2 blur shadow-blur">
+          <div class="row">
+            <div class="col-md-4 position-relative">
+              <div class="p-1 text-center">
+                <h5 class="mt-3"><a href="{% url 'kitchen:cook-list' %}">Cooks</a></h5>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4 position-relative">
+              <div class="p-1 text-center">
+                <h5 class="mt-3"><a href="{% url 'kitchen:dish-list' %}">Dishes</a></h5>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4">
+              <div class="p-1 text-center">
+                <h5 class="mt-3"><a href="{% url 'kitchen:dish-type-list' %}">Dish types</a></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 {% endblock %}
