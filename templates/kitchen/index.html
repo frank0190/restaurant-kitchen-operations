@@ -1,17 +1,99 @@
-{% extends "base.html" %}
+{% extends "base-presentation.html" %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %}{% endblock body_class %}
 
 {% block content %}
-  <h1>KITCHEN OPERATIONS</h1>
-  <p>Welcome to manage easily all kitchen processes!</p>
-  <h2>Dynamic content</h2>
-  <p>The kitchen service has the following record counts:</p>
-  <ul>
-    <li><strong>Dish types:</strong> {{ num_dish_types }}</li>
-    <li><strong>Dishes:</strong> {{ num_dishes }}</li>
-    <li><strong>Cooks:</strong> {{ num_cooks }}</li>
-  </ul>
 
-  <p>You have visited this page
-    {{ num_visits }} time{{ num_visits|pluralize }}.
-  </p>
-{% endblock %}
+  <header class="header-2">
+    <div class="page-header section-height-75 relative"
+         style="background-image: url('{{ ASSETS_ROOT }}/img/kitchen.jpg')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">KITCHEN</h1>
+            <p class="lead text-white mt-3" style="padding-left: 130px">
+              Welcome to manage easily all kitchen processes!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/wave_animation.html" %}
+
+    </div>
+  </header>
+  <section class="pt-3 pb-4" id="count-stats" style="position: absolute; bottom: 0; width: 100%;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
+          <div class="row">
+            <div class="col-md-4 position-relative">
+              <div class="p-1 text-center">
+                <h1 class="text-gradient text-primary" id="state1" countTo="{{ num_cooks }}">0</h1>
+                <h5 class="mt-3"><a href="{% url 'kitchen:cook-list' %}">Cooks</a></h5>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4 position-relative">
+              <div class="p-1 text-center">
+                <h1 class="text-gradient text-primary" id="state2" countTo="{{ num_dishes }}">0</h1>
+                <h5 class="mt-3"><a href="{% url 'kitchen:dish-list' %}">Dishes</a></h5>
+              </div>
+              <hr class="vertical dark">
+            </div>
+            <div class="col-md-4">
+              <div class="p-1 text-center">
+                <h1 class="text-gradient text-primary" id="state3" countTo="{{ num_dish_types }}">0</h1>
+                <h5 class="mt-3"><a href="{% url 'kitchen:dish-type-list' %}">Dish types</a></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="{{ ASSETS_ROOT }}/js/plugins/countup.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/choices.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/rellax.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/tilt.min.js"></script>
+  <script src="{{ ASSETS_ROOT }}/js/plugins/choices.min.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+  <script src="{{ ASSETS_ROOT }}/js/soft-design-system.min.js?v=1.0.1" type="text/javascript"></script>
+  <script type="text/javascript">
+      if (document.getElementById('state1')) {
+          const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
+          if (!countUp.error) {
+              countUp.start();
+          } else {
+              console.error(countUp.error);
+          }
+      }
+      if (document.getElementById('state2')) {
+          const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
+          if (!countUp1.error) {
+              countUp1.start();
+          } else {
+              console.error(countUp1.error);
+          }
+      }
+      if (document.getElementById('state3')) {
+          const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
+          if (!countUp2.error) {
+              countUp2.start();
+          } else {
+              console.error(countUp2.error);
+          }
+          ;
+      }
+  </script>
+
+{% endblock javascripts %}
