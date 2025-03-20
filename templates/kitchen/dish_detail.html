@@ -31,15 +31,18 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="text-primary">Cooks:</h4>
       <div>
-        {% if dish in user.cooked_dishes.all %}
-          <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-danger">
-            <i class="bi bi-x-circle"></i> Delete me from this dish
-          </a>
-        {% else %}
-          <a href="{% url 'kitchen:toggle_dish_assignment' pk=dish.id %}" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Assign me to this dish
-          </a>
-        {% endif %}
+        <form action="{% url 'kitchen:dish-assignment' pk=dish.id %}" method="post">
+          {% csrf_token %}
+          {% if dish in user.cooked_dishes.all %}
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-x-circle"></i> Delete me from this dish
+            </button>
+          {% else %}
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-plus-circle"></i> Assign me to this dish
+            </button>
+          {% endif %}
+        </form>
       </div>
     </div>
 
