@@ -24,3 +24,10 @@ python manage.py runserver # starts Django Server
 * Authentication functionality for Cook/User.
 * Managing dishes, cooks & dish types directly from website interface.
 * Powerful admin panel for advanced managing.
+
+## Test User
+
+For testing purposes, you can use the following credentials to log in:
+
+Login: user
+Password: user12345
