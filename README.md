@@ -4,7 +4,7 @@ This django project is a system for managing the kitchen operations of a restaur
 
 ## Check it out!
 
-[Restaurant kitchen operations project deployed to Render](https://restaurant-kitchen-operations.render.com/)
+[Restaurant kitchen operations project deployed to Render](https://restaurant-kitchen-operations.onrender.com)
 
 ## Installing / Getting started
 
